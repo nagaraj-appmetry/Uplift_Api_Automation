@@ -2,6 +2,7 @@ package com.example.utilities;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigLoader {
@@ -9,7 +10,8 @@ public class ConfigLoader {
     private static final Properties properties = new Properties();
 
     static {
-        try (FileInputStream input = new FileInputStream("config.properties")) {
+        try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream("config.properties");
+        ) {
             properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();

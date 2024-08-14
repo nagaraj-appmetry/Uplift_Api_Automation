@@ -241,13 +241,18 @@ public class APIClient {
 
     public static final String BASE_URL = "https://nhimumobll.execute-api.us-west-2.amazonaws.com/development";
 
-    public Response createGroup(Map<String, String> groupDetails, String bearerToken) {
-        return RestAssured.given()
-                .header("Authorization", "Bearer " + bearerToken)
-                .contentType("application/json")
-                .body(groupDetails) // Passing the map directly as the request body
-                .when()
-                .post(BASE_URL + "/groups");
+
+    public Response createGroup(String body, String token) {
+        try{
+        RequestSpecification request = buildRequest(token, "application/json");
+        request.body(body);
+        Response response = request.post(BASE_URL+ "/groups");
+        LoggerUtil.logResponse(response);
+        return response;
+    } catch (Exception e) {
+        logger.error("Error during POST request to " + e);
+        throw e;
+    }
     }
 
 
@@ -282,7 +287,11 @@ public class APIClient {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + bearerToken)
                 .when()
-                .get(endpoint);
+                .get(endpoint)
+                .then()
+                .extract()
+                .response();
     }
+
 
 }

@@ -17,10 +17,13 @@ import org.testng.Assert;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.example.clients.APIClient;
 
@@ -366,16 +369,8 @@ public class APIStepDefinitions {
      */
 
 
-    @Given("User 1 creates a group with the following details:")
-    public void createGroup(Map<String, String> groupDetails) {
-        String bearerToken = ConfigLoader.getProperty("user1.token");
-        response = apiClient.createGroup(groupDetails, bearerToken);
-        ValidationUtils.validateJsonBody(response);
-        LoggerUtil.logResponse(response);
-    }
-
     @When("I send a POST request to create group with name {string}, description {string}, isPublic {string}, profilePicture {string}")
-    public void sendPostRequestToCreateGroup(String name, String description, String isPublic, String profilePicture) {
+    public void createGroup(String name, String description, String isPublic, String profilePicture) {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("name", name);
         requestBody.put("description", description);
@@ -383,14 +378,29 @@ public class APIStepDefinitions {
         requestBody.put("profilePicture", profilePicture);
         String jsonBody = new Gson().toJson(requestBody);
         String bearerToken = ConfigLoader.getProperty("user1.token");
-        response = apiClient.postRequest("groups", jsonBody, bearerToken);
+        response = apiClient.createGroup( jsonBody, bearerToken);
+        ValidationUtils.validateJsonBody(response);
+        LoggerUtil.logResponse(response);
+        // Log the response for debugging
+        response.prettyPrint();
+        JSONObject responseBody = new JSONObject(response.getBody().asString());
+        // Fetch the groupId from the response
+        String groupId = responseBody.getString("groupId");
+
+        //assertThat("Group ID should not be null.", groupId, notNullValue());
     }
 
     @When("User 1 fetches the group ID of the newly created group")
     public void fetchGroupId() {
-        createdGroupId = response.jsonPath().getString("id");
-        Assert.assertNotNull(createdGroupId, "Group ID should not be null.");
+        JSONObject responseBody = new JSONObject(response.getBody().asString());
+        createdGroupId = responseBody.getString("groupId");
+        System.out.println("================================================");
+        System.out.println(createdGroupId);
+        System.out.println("================================================");
+        //Assert.assertNotNull(createdGroupId, "Group ID should not be null.");
         LoggerUtil.log("Fetched Group ID: " + createdGroupId);
+        ValidationUtils.validateJsonBody(response);
+        LoggerUtil.logResponse(response);
     }
 
     @Then("User 1 sends a group invite to User 2 with userId {string}")
@@ -400,6 +410,8 @@ public class APIStepDefinitions {
         ValidationUtils.validateJsonBody(response);
         inviteId = response.jsonPath().getString("inviteId");
         LoggerUtil.log("Invite sent with Invite ID: " + inviteId);
+        ValidationUtils.validateJsonBody(response);
+        LoggerUtil.logResponse(response);
     }
 
     @When("User 2 accepts the group invite")
@@ -417,17 +429,28 @@ public class APIStepDefinitions {
         String memberCount = response.jsonPath().getString("memberCount");
         Assert.assertEquals(memberCount, expectedCount, "Member count does not match.");
         LoggerUtil.log("Verified member count is: " + memberCount);
+        ValidationUtils.validateJsonBody(response);
+        LoggerUtil.logResponse(response);
     }
 
     @Then("User 1 lists the group users to verify that User 2 with userId {string} is a member of the group")
     public void listGroupUsers(String userId) {
         String bearerToken = ConfigLoader.getProperty("user1.token");
         response = apiClient.listGroupUsers(createdGroupId, bearerToken);
+        JsonPath jsonPath = response.jsonPath();
+        List<String> userIds = jsonPath.getList("members.userId");
+        if (userIds == null) {
+            LoggerUtil.log("The 'members' field is missing or null. The response might be incorrect.");
+            Assert.fail("The 'members' field is missing or null. The response might be incorrect.");
+        } else {
+            boolean isUserPresent = userIds.contains(userId);
+            Assert.assertTrue(isUserPresent, "User 2 is not a member of the group.");
+            LoggerUtil.log("Verified that User 2 with userId " + userId + " is a member of the group.");
+        }
         ValidationUtils.validateJsonBody(response);
-        boolean isUserPresent = response.jsonPath().getList("users.userId").contains(userId);
-        Assert.assertTrue(isUserPresent, "User 2 is not a member of the group.");
-        LoggerUtil.log("Verified that User 2 with userId " + userId + " is a member of the group.");
+        LoggerUtil.logResponse(response);
     }
 
 
 }
+

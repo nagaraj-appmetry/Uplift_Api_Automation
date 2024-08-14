@@ -7,7 +7,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = "src/test/resources/features-api/GroupManagement.feature",
+        features = "src/main/resources/features-api/GroupManagement.feature",
         glue = "com.example.stepdefs",
         plugin = {
                 "pretty",
