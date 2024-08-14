@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/nagar/IdeaProjects/Api-Automation/src/main/java/com/example/base">
+        <classes/>
+    </test>
+    <test verbose="2" preserve-order="true" name="C:/Users/nagar/IdeaProjects/Api-Automation/src/main/java/com/example/clients">
+        <classes/>
+    </test>
+    <test verbose="2" preserve-order="true" name="C:/Users/nagar/IdeaProjects/Api-Automation/src/main/java/com/example/stepdefs"><classes/>
+    </test>
+    <test verbose="2" preserve-order="true" name="C:/Users/nagar/IdeaProjects/Api-Automation/src/main/java/com/example/testrunners">
+    <classes/>
+    </test>
+    <test verbose="2" preserve-order="true" name="C:/Users/nagar/IdeaProjects/Api-Automation/src/main/java/com/example/utilities">
+        <classes/>
+    </test>
+</suite>
