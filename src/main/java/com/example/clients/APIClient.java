@@ -189,34 +189,19 @@ public class APIClient {
         }
     }
 
-//    private RequestSpecification buildRequest(String token, String acceptType) {
-//        RequestSpecification request = given()
-//                .filter(new RequestLoggingFilter())
-//                .filter(new ResponseLoggingFilter())
-//                .header("Accept", acceptType);
-//        if (token != null) {
-//            System.out.println("Using token: " + token);
-//            request.header("Authorization", "Bearer " + token);
-//        }
-//        return request;
-//    }
-
-
-    /*
-    public Response getGroups(String endpoint, String bearerToken, int page, int limit) {
-        try {
-            RequestSpecification request = buildRequest(BEARER_TOKEN, "application/json");
-            request.queryParam("page", page)
-                    .queryParam("limit", limit);
-            Response response = request.get(endpoint);
-            LoggerUtil.logResponse(response);
-            return response;
-        } catch (Exception e) {
-            logger.error("Error during GET request for paginated groups to /groups", e);
-            throw e;
+    private RequestSpecification buildRequest(String token, String acceptType) {
+        RequestSpecification request = given()
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .header("Accept", acceptType);
+        if (token != null) {
+            System.out.println("Using token: " + token);
+            request.header("Authorization", "Bearer " + token);
         }
+        return request;
     }
-     */
+
+    //=======================================
     public Response deleteAcceptedGroupInvite(String endpoint, String token) {
         try {
             RequestSpecification request = buildRequest(BEARER_TOKEN, "application/json");
@@ -248,24 +233,11 @@ public class APIClient {
 
     /*
 
-
     .....
 
     ....
 
      */
-
-    private RequestSpecification buildRequest(String token, String acceptType) {
-        RequestSpecification request = given()
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .header("Accept", acceptType);
-        if (token != null) {
-            System.out.println("Using token: " + token);
-            request.header("Authorization", "Bearer " + token);
-        }
-        return request;
-    }
 
     public static final String BASE_URL = "https://nhimumobll.execute-api.us-west-2.amazonaws.com/development";
 
