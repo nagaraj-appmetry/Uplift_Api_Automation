@@ -3187,3 +3187,474 @@ X-Amz-Cf-Id=sXv8Q29e2Y6sqEUuRKbGQXOAHwMZXZgzSB46I8GYhlRFEnRmPuF7pA==
 2024-08-14 17:03:41 -         ===========================================NEXT=====================================================
 2024-08-14 17:03:41 - ===========================================================================================================================
 2024-08-14 17:03:43 - Test suite execution completed.
+2024-08-15 12:24:02 - Status Code: 401
+2024-08-15 12:24:02 - Response Body: {"message":"The incoming token has expired"}
+2024-08-15 12:24:02 - Headers: Content-Type=application/json
+Content-Length=44
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 06:54:02 GMT
+x-amz-apigw-id=cibhtHxcPHcEbew=
+x-amzn-RequestId=832caedf-273f-4c9b-baa9-069908e82044
+Access-Control-Allow-Origin=*
+x-amzn-ErrorType=UnauthorizedException
+X-Cache=Error from cloudfront
+Via=1.1 5d22aa4437becf76450a9de89589fd00.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=6I9JydKZz9nIY8T4M-xdDdzk9nAkNahNMuhp772IcMtKoI7XcIQ5XQ==
+2024-08-15 12:24:02 - ===========================================================================================================================
+2024-08-15 12:24:02 -         ===========================================NEXT=====================================================
+2024-08-15 12:24:02 - ===========================================================================================================================
+2024-08-15 12:24:02 - Validated JSON body contains 'data' field.
+2024-08-15 12:24:02 - Status Code: 401
+2024-08-15 12:24:02 - Response Body: {"message":"The incoming token has expired"}
+2024-08-15 12:24:02 - Headers: Content-Type=application/json
+Content-Length=44
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 06:54:02 GMT
+x-amz-apigw-id=cibhtHxcPHcEbew=
+x-amzn-RequestId=832caedf-273f-4c9b-baa9-069908e82044
+Access-Control-Allow-Origin=*
+x-amzn-ErrorType=UnauthorizedException
+X-Cache=Error from cloudfront
+Via=1.1 5d22aa4437becf76450a9de89589fd00.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=6I9JydKZz9nIY8T4M-xdDdzk9nAkNahNMuhp772IcMtKoI7XcIQ5XQ==
+2024-08-15 12:24:02 - ===========================================================================================================================
+2024-08-15 12:24:02 -         ===========================================NEXT=====================================================
+2024-08-15 12:24:02 - ===========================================================================================================================
+2024-08-15 12:24:04 - Test suite execution completed.
+2024-08-15 12:30:25 - Status Code: 401
+2024-08-15 12:30:25 - Response Body: {"message":"The incoming token has expired"}
+2024-08-15 12:30:25 - Headers: Content-Type=application/json
+Content-Length=44
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:00:25 GMT
+x-amz-apigw-id=cicdkGNhvHcElsA=
+x-amzn-RequestId=b647ad0c-73b6-4531-8e65-cb1714e8f3e6
+Access-Control-Allow-Origin=*
+x-amzn-ErrorType=UnauthorizedException
+X-Cache=Error from cloudfront
+Via=1.1 7ff8b70f0200b5dcc721acba3982ed1e.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=3M2GuKATCXr-F3UzxoIVaMJe5Zd_1pl4rYOEopU5cijNxCQIO3Gnrg==
+2024-08-15 12:30:25 - ===========================================================================================================================
+2024-08-15 12:30:25 -         ===========================================NEXT=====================================================
+2024-08-15 12:30:25 - ===========================================================================================================================
+2024-08-15 12:30:25 - Validated JSON body contains 'data' field.
+2024-08-15 12:30:25 - Status Code: 401
+2024-08-15 12:30:25 - Response Body: {"message":"The incoming token has expired"}
+2024-08-15 12:30:25 - Headers: Content-Type=application/json
+Content-Length=44
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:00:25 GMT
+x-amz-apigw-id=cicdkGNhvHcElsA=
+x-amzn-RequestId=b647ad0c-73b6-4531-8e65-cb1714e8f3e6
+Access-Control-Allow-Origin=*
+x-amzn-ErrorType=UnauthorizedException
+X-Cache=Error from cloudfront
+Via=1.1 7ff8b70f0200b5dcc721acba3982ed1e.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=3M2GuKATCXr-F3UzxoIVaMJe5Zd_1pl4rYOEopU5cijNxCQIO3Gnrg==
+2024-08-15 12:30:25 - ===========================================================================================================================
+2024-08-15 12:30:25 -         ===========================================NEXT=====================================================
+2024-08-15 12:30:25 - ===========================================================================================================================
+2024-08-15 12:30:29 - Test suite execution completed.
+2024-08-15 12:36:42 - Status Code: 200
+2024-08-15 12:36:42 - Response Body: {"groupId":"ae122aeb-1c9d-4ca6-9775-d8916345fbe8","inviteCode":"UP-VA3ZAL"}
+2024-08-15 12:36:42 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:42 GMT
+X-Amzn-Trace-Id=Root=1-66bda900-656ad93e6fc7c5830b8f9641;Parent=191f5eb3631ed92c;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=fa2def82-5eeb-48af-81cc-b5b36703f979
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidYLE8NPHcEn9w=
+X-Cache=Miss from cloudfront
+Via=1.1 1c46774b53d343ab0b1ffbd79efd10ac.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=jgPjKFQleJwVl0DnpQihi_Z4e9FZGjx4RufQMWrlCis5ln_NN7yUSg==
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:42 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:42 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:42 - Status Code: 200
+2024-08-15 12:36:42 - Response Body: {"groupId":"ae122aeb-1c9d-4ca6-9775-d8916345fbe8","inviteCode":"UP-VA3ZAL"}
+2024-08-15 12:36:42 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:42 GMT
+X-Amzn-Trace-Id=Root=1-66bda900-656ad93e6fc7c5830b8f9641;Parent=191f5eb3631ed92c;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=fa2def82-5eeb-48af-81cc-b5b36703f979
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidYLE8NPHcEn9w=
+X-Cache=Miss from cloudfront
+Via=1.1 1c46774b53d343ab0b1ffbd79efd10ac.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=jgPjKFQleJwVl0DnpQihi_Z4e9FZGjx4RufQMWrlCis5ln_NN7yUSg==
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:42 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:42 - Fetched Group ID: ae122aeb-1c9d-4ca6-9775-d8916345fbe8
+2024-08-15 12:36:42 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:42 - Status Code: 200
+2024-08-15 12:36:42 - Response Body: {"groupId":"ae122aeb-1c9d-4ca6-9775-d8916345fbe8","inviteCode":"UP-VA3ZAL"}
+2024-08-15 12:36:42 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:42 GMT
+X-Amzn-Trace-Id=Root=1-66bda900-656ad93e6fc7c5830b8f9641;Parent=191f5eb3631ed92c;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=fa2def82-5eeb-48af-81cc-b5b36703f979
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidYLE8NPHcEn9w=
+X-Cache=Miss from cloudfront
+Via=1.1 1c46774b53d343ab0b1ffbd79efd10ac.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=jgPjKFQleJwVl0DnpQihi_Z4e9FZGjx4RufQMWrlCis5ln_NN7yUSg==
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:42 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:42 - ===========================================================================================================================
+2024-08-15 12:36:45 - Status Code: 200
+2024-08-15 12:36:45 - Response Body: {"success":true,"message":"Create group invite successfully."}
+2024-08-15 12:36:45 - Headers: Content-Type=application/json
+Content-Length=62
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:44 GMT
+X-Amzn-Trace-Id=Root=1-66bda903-5383a5661425689b0ebff8dc;Parent=1b8daea9a5bc7db8;Sampled=0;lineage=ba8d007e:0
+x-amzn-RequestId=e2ff0291-1ae2-4c10-a509-d470d723cc12
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidYjG2rvHcEq-A=
+X-Cache=Miss from cloudfront
+Via=1.1 4774b00e2d656478bcba37c033ae541c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=Tb7lr-peFmYG11STiF09XMgu9xVknzEp3XyKMUgMQ6h2NxQogZQxJA==
+2024-08-15 12:36:45 - ===========================================================================================================================
+2024-08-15 12:36:45 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:45 - ===========================================================================================================================
+2024-08-15 12:36:45 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:45 - Invite sent with Invite ID: null
+2024-08-15 12:36:45 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:45 - Status Code: 200
+2024-08-15 12:36:45 - Response Body: {"success":true,"message":"Create group invite successfully."}
+2024-08-15 12:36:45 - Headers: Content-Type=application/json
+Content-Length=62
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:44 GMT
+X-Amzn-Trace-Id=Root=1-66bda903-5383a5661425689b0ebff8dc;Parent=1b8daea9a5bc7db8;Sampled=0;lineage=ba8d007e:0
+x-amzn-RequestId=e2ff0291-1ae2-4c10-a509-d470d723cc12
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidYjG2rvHcEq-A=
+X-Cache=Miss from cloudfront
+Via=1.1 4774b00e2d656478bcba37c033ae541c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=Tb7lr-peFmYG11STiF09XMgu9xVknzEp3XyKMUgMQ6h2NxQogZQxJA==
+2024-08-15 12:36:45 - ===========================================================================================================================
+2024-08-15 12:36:45 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:45 - ===========================================================================================================================
+2024-08-15 12:36:47 - Status Code: 200
+2024-08-15 12:36:47 - Response Body: {"success":true,"message":"Group Invite processed successfully."}
+2024-08-15 12:36:47 - Headers: Content-Type=application/json
+Content-Length=65
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:47 GMT
+X-Amzn-Trace-Id=Root=1-66bda906-4c6536f85f96936724473d23;Parent=60ee28f5afbd27ef;Sampled=0;lineage=9928b78a:0
+x-amzn-RequestId=3761d949-bc32-40c3-bffb-48d28f3fe1d0
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZFGkAPHcEC0A=
+X-Cache=Miss from cloudfront
+Via=1.1 b54ed05222d6420c578fc810016a0a96.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=hHym4Lue1l9twUU_rbhwBLcWomD7qC6GO5Aq8PIJolWXhWdvkvWITQ==
+2024-08-15 12:36:47 - ===========================================================================================================================
+2024-08-15 12:36:47 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:47 - ===========================================================================================================================
+2024-08-15 12:36:47 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:47 - Status Code: 200
+2024-08-15 12:36:47 - Response Body: {"success":true,"message":"Group Invite processed successfully."}
+2024-08-15 12:36:47 - Headers: Content-Type=application/json
+Content-Length=65
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:47 GMT
+X-Amzn-Trace-Id=Root=1-66bda906-4c6536f85f96936724473d23;Parent=60ee28f5afbd27ef;Sampled=0;lineage=9928b78a:0
+x-amzn-RequestId=3761d949-bc32-40c3-bffb-48d28f3fe1d0
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZFGkAPHcEC0A=
+X-Cache=Miss from cloudfront
+Via=1.1 b54ed05222d6420c578fc810016a0a96.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=hHym4Lue1l9twUU_rbhwBLcWomD7qC6GO5Aq8PIJolWXhWdvkvWITQ==
+2024-08-15 12:36:47 - ===========================================================================================================================
+2024-08-15 12:36:47 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:47 - ===========================================================================================================================
+2024-08-15 12:36:49 - Status Code: 200
+2024-08-15 12:36:49 - Response Body: {"group":{"groupId":"ae122aeb-1c9d-4ca6-9775-d8916345fbe8","groupName":"Test Group","isPublic":0,"description":"Group for testing","profilePicture":"","inviteCode":"UP-VA3ZAL"},"memberCount":2}
+2024-08-15 12:36:49 - Headers: Content-Type=application/json
+Content-Length=193
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:48 GMT
+X-Amzn-Trace-Id=Root=1-66bda908-6b238ea742b67bfb180333de;Parent=36a567d4c01d14ab;Sampled=0;lineage=c9bb7607:0
+x-amzn-RequestId=1f7f1e82-fa86-4b2c-8b95-1ee89575d751
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZZFvDvHcEJkw=
+X-Cache=Miss from cloudfront
+Via=1.1 b45f798736564f5ccd7e5125e950d572.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=wFT7JkRWI-6lN24Mywp2Ul4BDsn7VAHAmiEpW2g3lexIsZ4bPMSHNg==
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 - Verified member count is: 2
+2024-08-15 12:36:49 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:49 - Status Code: 200
+2024-08-15 12:36:49 - Response Body: {"group":{"groupId":"ae122aeb-1c9d-4ca6-9775-d8916345fbe8","groupName":"Test Group","isPublic":0,"description":"Group for testing","profilePicture":"","inviteCode":"UP-VA3ZAL"},"memberCount":2}
+2024-08-15 12:36:49 - Headers: Content-Type=application/json
+Content-Length=193
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:48 GMT
+X-Amzn-Trace-Id=Root=1-66bda908-6b238ea742b67bfb180333de;Parent=36a567d4c01d14ab;Sampled=0;lineage=c9bb7607:0
+x-amzn-RequestId=1f7f1e82-fa86-4b2c-8b95-1ee89575d751
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZZFvDvHcEJkw=
+X-Cache=Miss from cloudfront
+Via=1.1 b45f798736564f5ccd7e5125e950d572.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=wFT7JkRWI-6lN24Mywp2Ul4BDsn7VAHAmiEpW2g3lexIsZ4bPMSHNg==
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 - Status Code: 200
+2024-08-15 12:36:49 - Response Body: {"members":[{"userId":"b66bfddc-d5ce-4c59-8a8a-fae8d4d39d8d","userName":"nagaraj m","imageUrl":"","roleName":"owner"},{"userId":"99fca8d5-c910-4d0f-99c7-c63a30233cf9","userName":"Ankish Jain","imageUrl":"https://development-uplift-remote-resources.s3-us-west-2.amazonaws.com/public/722F7EE6-A450-4BF2-B0AD-7FB89EF79F09","roleName":"member"}]}
+2024-08-15 12:36:49 - Headers: Content-Type=application/json
+Content-Length=342
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:49 GMT
+X-Amzn-Trace-Id=Root=1-66bda909-1efd6a7a4c5899390cd3fb73;Parent=3bda0cbe4e0ebd92;Sampled=0;lineage=b5fcf749:0
+x-amzn-RequestId=23ba27b5-1399-469c-8811-14ca28312212
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZmF64PHcENIA=
+X-Cache=Miss from cloudfront
+Via=1.1 03476d498e28569e39cbab19ffd9ec6c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=MFepMLf6-nExgUHx4wOEiOxfgWMDKVwMCKGjehdOwnxeVBUDPAZdFA==
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 - Verified that User 2 with userId 99fca8d5-c910-4d0f-99c7-c63a30233cf9 is a member of the group.
+2024-08-15 12:36:49 - Validated JSON body contains 'data' field.
+2024-08-15 12:36:49 - Status Code: 200
+2024-08-15 12:36:49 - Response Body: {"members":[{"userId":"b66bfddc-d5ce-4c59-8a8a-fae8d4d39d8d","userName":"nagaraj m","imageUrl":"","roleName":"owner"},{"userId":"99fca8d5-c910-4d0f-99c7-c63a30233cf9","userName":"Ankish Jain","imageUrl":"https://development-uplift-remote-resources.s3-us-west-2.amazonaws.com/public/722F7EE6-A450-4BF2-B0AD-7FB89EF79F09","roleName":"member"}]}
+2024-08-15 12:36:49 - Headers: Content-Type=application/json
+Content-Length=342
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:06:49 GMT
+X-Amzn-Trace-Id=Root=1-66bda909-1efd6a7a4c5899390cd3fb73;Parent=3bda0cbe4e0ebd92;Sampled=0;lineage=b5fcf749:0
+x-amzn-RequestId=23ba27b5-1399-469c-8811-14ca28312212
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=cidZmF64PHcENIA=
+X-Cache=Miss from cloudfront
+Via=1.1 03476d498e28569e39cbab19ffd9ec6c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=MFepMLf6-nExgUHx4wOEiOxfgWMDKVwMCKGjehdOwnxeVBUDPAZdFA==
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:49 -         ===========================================NEXT=====================================================
+2024-08-15 12:36:49 - ===========================================================================================================================
+2024-08-15 12:36:52 - Test suite execution completed.
+2024-08-15 12:42:55 - Test suite execution completed.
+2024-08-15 12:43:54 - Status Code: 200
+2024-08-15 12:43:54 - Response Body: {"groupId":"1ea59c81-c075-4f96-b5bb-62d6ecdbf861","inviteCode":"UP-8T7Z4S"}
+2024-08-15 12:43:54 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:54 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab0-555adaae799b8b7b4ad384c1;Parent=02d382d7edaedf0a;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=4eea0533-7cb6-4394-b26e-dcd04342f27d
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciebrERHPHcER2w=
+X-Cache=Miss from cloudfront
+Via=1.1 f0b0b757bda5d486a2538debdf4d2396.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=vQYOtv9wQB_QHlcOo31tl7NCtnwIoF-_FN-i17yrddAUrpwHnhwK5Q==
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:54 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:54 - Validated JSON body contains 'data' field.
+2024-08-15 12:43:54 - Status Code: 200
+2024-08-15 12:43:54 - Response Body: {"groupId":"1ea59c81-c075-4f96-b5bb-62d6ecdbf861","inviteCode":"UP-8T7Z4S"}
+2024-08-15 12:43:54 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:54 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab0-555adaae799b8b7b4ad384c1;Parent=02d382d7edaedf0a;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=4eea0533-7cb6-4394-b26e-dcd04342f27d
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciebrERHPHcER2w=
+X-Cache=Miss from cloudfront
+Via=1.1 f0b0b757bda5d486a2538debdf4d2396.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=vQYOtv9wQB_QHlcOo31tl7NCtnwIoF-_FN-i17yrddAUrpwHnhwK5Q==
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:54 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:54 - Fetched Group ID: 1ea59c81-c075-4f96-b5bb-62d6ecdbf861
+2024-08-15 12:43:54 - Validated JSON body contains 'data' field.
+2024-08-15 12:43:54 - Status Code: 200
+2024-08-15 12:43:54 - Response Body: {"groupId":"1ea59c81-c075-4f96-b5bb-62d6ecdbf861","inviteCode":"UP-8T7Z4S"}
+2024-08-15 12:43:54 - Headers: Content-Type=application/json
+Content-Length=75
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:54 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab0-555adaae799b8b7b4ad384c1;Parent=02d382d7edaedf0a;Sampled=0;lineage=2ca14092:0
+x-amzn-RequestId=4eea0533-7cb6-4394-b26e-dcd04342f27d
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciebrERHPHcER2w=
+X-Cache=Miss from cloudfront
+Via=1.1 f0b0b757bda5d486a2538debdf4d2396.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=vQYOtv9wQB_QHlcOo31tl7NCtnwIoF-_FN-i17yrddAUrpwHnhwK5Q==
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:54 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:54 - ===========================================================================================================================
+2024-08-15 12:43:57 - Status Code: 200
+2024-08-15 12:43:57 - Response Body: {"success":true,"message":"Create group invite successfully."}
+2024-08-15 12:43:57 - Headers: Content-Type=application/json
+Content-Length=62
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:57 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab3-4c0220255689358c178b6c18;Parent=657de3d96c3633e7;Sampled=0;lineage=ba8d007e:0
+x-amzn-RequestId=4df120ff-e89d-45d0-b1f6-58466cd33a10
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciecHFg9vHcEkgg=
+X-Cache=Miss from cloudfront
+Via=1.1 457b36267487e906b58f06d150a4aa82.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=bVo0P5EndzkeqbOFtxCJ4zCMdUExGrL5kq0CoReFq58GbNxFlpYgCw==
+2024-08-15 12:43:57 - ===========================================================================================================================
+2024-08-15 12:43:57 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:57 - ===========================================================================================================================
+2024-08-15 12:43:57 - Validated JSON body contains 'data' field.
+2024-08-15 12:43:57 - Invite sent with Invite ID: null
+2024-08-15 12:43:57 - Validated JSON body contains 'data' field.
+2024-08-15 12:43:57 - Status Code: 200
+2024-08-15 12:43:57 - Response Body: {"success":true,"message":"Create group invite successfully."}
+2024-08-15 12:43:57 - Headers: Content-Type=application/json
+Content-Length=62
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:57 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab3-4c0220255689358c178b6c18;Parent=657de3d96c3633e7;Sampled=0;lineage=ba8d007e:0
+x-amzn-RequestId=4df120ff-e89d-45d0-b1f6-58466cd33a10
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciecHFg9vHcEkgg=
+X-Cache=Miss from cloudfront
+Via=1.1 457b36267487e906b58f06d150a4aa82.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=bVo0P5EndzkeqbOFtxCJ4zCMdUExGrL5kq0CoReFq58GbNxFlpYgCw==
+2024-08-15 12:43:57 - ===========================================================================================================================
+2024-08-15 12:43:57 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:57 - ===========================================================================================================================
+2024-08-15 12:43:59 - Status Code: 200
+2024-08-15 12:43:59 - Response Body: {"success":true,"message":"Group Invite processed successfully."}
+2024-08-15 12:43:59 - Headers: Content-Type=application/json
+Content-Length=65
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:59 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab6-115ecb9e32d6ec4415d66056;Parent=062b1d1064734cbb;Sampled=0;lineage=9928b78a:0
+x-amzn-RequestId=d2ff741b-c406-45cf-a3c3-390e2bba30ca
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciecgHicvHcESng=
+X-Cache=Miss from cloudfront
+Via=1.1 4774b00e2d656478bcba37c033ae541c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=QZDaraSglprj3q4WQRv0uhwCz4POKVpJKjXV474sQYUK6Z2njnAFrg==
+2024-08-15 12:43:59 - ===========================================================================================================================
+2024-08-15 12:43:59 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:59 - ===========================================================================================================================
+2024-08-15 12:43:59 - Validated JSON body contains 'data' field.
+2024-08-15 12:43:59 - Status Code: 200
+2024-08-15 12:43:59 - Response Body: {"success":true,"message":"Group Invite processed successfully."}
+2024-08-15 12:43:59 - Headers: Content-Type=application/json
+Content-Length=65
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:13:59 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab6-115ecb9e32d6ec4415d66056;Parent=062b1d1064734cbb;Sampled=0;lineage=9928b78a:0
+x-amzn-RequestId=d2ff741b-c406-45cf-a3c3-390e2bba30ca
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciecgHicvHcESng=
+X-Cache=Miss from cloudfront
+Via=1.1 4774b00e2d656478bcba37c033ae541c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=QZDaraSglprj3q4WQRv0uhwCz4POKVpJKjXV474sQYUK6Z2njnAFrg==
+2024-08-15 12:43:59 - ===========================================================================================================================
+2024-08-15 12:43:59 -         ===========================================NEXT=====================================================
+2024-08-15 12:43:59 - ===========================================================================================================================
+2024-08-15 12:44:01 - Status Code: 200
+2024-08-15 12:44:01 - Response Body: {"group":{"groupId":"1ea59c81-c075-4f96-b5bb-62d6ecdbf861","groupName":"Test Group","isPublic":0,"description":"Group for testing","profilePicture":"","inviteCode":"UP-8T7Z4S"},"memberCount":2}
+2024-08-15 12:44:01 - Headers: Content-Type=application/json
+Content-Length=193
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:14:01 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab8-04ce7a5304fb038a664e7ebe;Parent=195a10239ea80141;Sampled=0;lineage=c9bb7607:0
+x-amzn-RequestId=3112264a-bb11-49f4-b008-73c7f624f58e
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciec1EVXPHcEufw=
+X-Cache=Miss from cloudfront
+Via=1.1 310f78097a148c20abaa7b74a711dbaa.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=diKPzLjfBTg3VfmVV46l-rNj8aA8kWeve95mqFTLvmIa7Z7kQTm1xQ==
+2024-08-15 12:44:01 - ===========================================================================================================================
+2024-08-15 12:44:01 -         ===========================================NEXT=====================================================
+2024-08-15 12:44:01 - ===========================================================================================================================
+2024-08-15 12:44:01 - Verified member count is: 2
+2024-08-15 12:44:01 - Validated JSON body contains 'data' field.
+2024-08-15 12:44:01 - Status Code: 200
+2024-08-15 12:44:01 - Response Body: {"group":{"groupId":"1ea59c81-c075-4f96-b5bb-62d6ecdbf861","groupName":"Test Group","isPublic":0,"description":"Group for testing","profilePicture":"","inviteCode":"UP-8T7Z4S"},"memberCount":2}
+2024-08-15 12:44:01 - Headers: Content-Type=application/json
+Content-Length=193
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:14:01 GMT
+X-Amzn-Trace-Id=Root=1-66bdaab8-04ce7a5304fb038a664e7ebe;Parent=195a10239ea80141;Sampled=0;lineage=c9bb7607:0
+x-amzn-RequestId=3112264a-bb11-49f4-b008-73c7f624f58e
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciec1EVXPHcEufw=
+X-Cache=Miss from cloudfront
+Via=1.1 310f78097a148c20abaa7b74a711dbaa.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=diKPzLjfBTg3VfmVV46l-rNj8aA8kWeve95mqFTLvmIa7Z7kQTm1xQ==
+2024-08-15 12:44:01 - ===========================================================================================================================
+2024-08-15 12:44:01 -         ===========================================NEXT=====================================================
+2024-08-15 12:44:01 - ===========================================================================================================================
+2024-08-15 12:44:04 - Status Code: 200
+2024-08-15 12:44:04 - Response Body: {"members":[{"userId":"b66bfddc-d5ce-4c59-8a8a-fae8d4d39d8d","userName":"nagaraj m","imageUrl":"","roleName":"owner"},{"userId":"99fca8d5-c910-4d0f-99c7-c63a30233cf9","userName":"Ankish Jain","imageUrl":"https://development-uplift-remote-resources.s3-us-west-2.amazonaws.com/public/722F7EE6-A450-4BF2-B0AD-7FB89EF79F09","roleName":"member"}]}
+2024-08-15 12:44:04 - Headers: Content-Type=application/json
+Content-Length=342
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:14:03 GMT
+X-Amzn-Trace-Id=Root=1-66bdaaba-4f2a688555f7a4f02bb944aa;Parent=150e4fc565ae521f;Sampled=0;lineage=b5fcf749:0
+x-amzn-RequestId=ee7f3667-19b0-401b-90d7-8294ddcd1e16
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciedJF-cvHcEA8w=
+X-Cache=Miss from cloudfront
+Via=1.1 b45f798736564f5ccd7e5125e950d572.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=A75cuDyL7p72AAvow1U2pxoXhtRbBFJf6STXJCV7FNqjn8YM4Km9fg==
+2024-08-15 12:44:04 - ===========================================================================================================================
+2024-08-15 12:44:04 -         ===========================================NEXT=====================================================
+2024-08-15 12:44:04 - ===========================================================================================================================
+2024-08-15 12:44:04 - Verified that User 2 with userId 99fca8d5-c910-4d0f-99c7-c63a30233cf9 is a member of the group.
+2024-08-15 12:44:04 - Validated JSON body contains 'data' field.
+2024-08-15 12:44:04 - Status Code: 200
+2024-08-15 12:44:04 - Response Body: {"members":[{"userId":"b66bfddc-d5ce-4c59-8a8a-fae8d4d39d8d","userName":"nagaraj m","imageUrl":"","roleName":"owner"},{"userId":"99fca8d5-c910-4d0f-99c7-c63a30233cf9","userName":"Ankish Jain","imageUrl":"https://development-uplift-remote-resources.s3-us-west-2.amazonaws.com/public/722F7EE6-A450-4BF2-B0AD-7FB89EF79F09","roleName":"member"}]}
+2024-08-15 12:44:04 - Headers: Content-Type=application/json
+Content-Length=342
+Connection=keep-alive
+Date=Thu, 15 Aug 2024 07:14:03 GMT
+X-Amzn-Trace-Id=Root=1-66bdaaba-4f2a688555f7a4f02bb944aa;Parent=150e4fc565ae521f;Sampled=0;lineage=b5fcf749:0
+x-amzn-RequestId=ee7f3667-19b0-401b-90d7-8294ddcd1e16
+Access-Control-Allow-Origin=*
+x-amz-apigw-id=ciedJF-cvHcEA8w=
+X-Cache=Miss from cloudfront
+Via=1.1 b45f798736564f5ccd7e5125e950d572.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop=MAA51-P3
+X-Amz-Cf-Id=A75cuDyL7p72AAvow1U2pxoXhtRbBFJf6STXJCV7FNqjn8YM4Km9fg==
+2024-08-15 12:44:04 - ===========================================================================================================================
+2024-08-15 12:44:04 -         ===========================================NEXT=====================================================
+2024-08-15 12:44:04 - ===========================================================================================================================
+2024-08-15 12:44:06 - Test suite execution completed.
