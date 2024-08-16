@@ -25,7 +25,7 @@ public class LoggerUtil {
     public static void logResponse(Response response) {
         log("Status Code: " + response.getStatusCode());
         log("Response Body: " + response.getBody().asString());
-        log("Headers: " + response.getHeaders().toString());
+        //log("Headers: " + response.getHeaders().toString());
         log("===========================================================================================================================");
         log("        ===========================================NEXT=====================================================");
         log("===========================================================================================================================");
@@ -33,7 +33,7 @@ public class LoggerUtil {
 
     public static void clearLogFile() {
         try (PrintWriter writer = new PrintWriter(LOG_FILE_PATH)) {
-            writer.print(""); // Clear the file content
+            writer.print(""); 
         } catch (IOException e) {
             e.printStackTrace();
         }
