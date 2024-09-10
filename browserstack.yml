@@ -1,0 +1,12 @@
+userName: vik_vcOxab
+accessKey: KD6sL5xaGW38pyxTszPz
+framework: testng
+app: bs://sample.app
+platforms:
+  - platformName: ios
+    deviceName: iPhone 15
+    platformVersion: 17
+parallelsPerPlatform: 1
+browserstackLocal: true
+buildName: browserstack-build-1
+projectName: BrowserStack Sample

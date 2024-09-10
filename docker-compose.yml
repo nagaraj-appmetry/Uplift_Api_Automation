@@ -84,7 +84,7 @@ services:
     restart: always
 
   rabbitmq:
-    image: bitnami/rabbitmq:3.13.3-debian-12-r0
+    image: bitnami/rabbitmq:3.13.2
     logging:
       <<: *logging
     ## Expose RabbitMQ
@@ -95,6 +95,9 @@ services:
       RABBITMQ_DEFAULT_USER: &rabbitmq_user rabbitmq
       RABBITMQ_DEFAULT_PASS: &rabbitmq_password rabbitmq
       RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS: "true"
+      ## @env RABBITMQ_PLUGINS define RabbitMQ plugins to be enabled
+      ## rabbitmq_consistent_hash_exchange is required for the ReportPortal
+      RABBITMQ_PLUGINS: rabbitmq_consistent_hash_exchange, rabbitmq_management, rabbitmq_auth_backend_ldap
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
       interval: 30s
@@ -240,7 +243,7 @@ services:
       RP_SESSION_LIVE: 86400 # in seconds
       RP_SAML_SESSION-LIVE: 4320
       ## RP_INITIAL_ADMIN_PASSWORD - the initial password of the superadmin user for the first launch. This value can't change the password on redeployments.
-      RP_INITIAL_ADMIN_PASSWORD: "erebus"
+      RP_INITIAL_ADMIN_PASSWORD: "1234"
       JAVA_OPTS: -Djava.security.egd=file:/dev/./urandom -XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=90.0
     volumes:
       - storage:/data/storage
