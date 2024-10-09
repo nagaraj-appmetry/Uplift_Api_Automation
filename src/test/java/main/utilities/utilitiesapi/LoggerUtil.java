@@ -51,5 +51,11 @@ public class LoggerUtil {
     }
 
 
+    public static void logRequest(RequestSpecification request) {
+        LoggerUtil.request = request;
+    }
 
+    public static void logRequest(RequestSpecification request, String endpoint) {
+        LoggerUtil.request = request;
+    }
 }

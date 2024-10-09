@@ -1,6 +1,5 @@
 package pages.clientapi;
 
-import dev.failsafe.TimeoutConfig;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import main.utilities.utilitiesapi.LoggerUtil;
@@ -10,17 +9,10 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static io.restassured.RestAssured.given;
 
 import org.apache.http.params.CoreConnectionPNames;
 import org.slf4j.Logger;
-import java.text.SimpleDateFormat;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
@@ -90,9 +82,9 @@ public class APIClient {
         }
     }
 
-    public Response getRequestWithHeader(String endpoint, String headerName, String headerValue, String bearerToken) {
+    public Response getRequestWithHeader(String endpoint, String headerName, String headerValue, String token) {
         try {
-            RequestSpecification request = buildRequest(null, "application/json");
+            RequestSpecification request = buildRequest(token, "application/json");
             request.header(headerName, headerValue);
             Response response = request.get(endpoint);
             LoggerUtil.logResponse(response);
@@ -102,6 +94,25 @@ public class APIClient {
             throw e;
         }
     }
+
+    public Response getRequestWithHeaders(String endpoint, Map<String, String> headers, String token) {
+        try {
+            RequestSpecification request = buildRequest(token, "application/json");
+
+            // Add headers if provided
+            if (headers != null) {
+                request.headers(headers);
+            }
+
+            Response response = request.get(endpoint);
+            LoggerUtil.logResponse(response);
+            return response;
+        } catch (Exception e) {
+            logger.error("Error during GET request with headers to " + endpoint, e);
+            throw e;
+        }
+    }
+
 
     public Response getRequestWithCondition(String endpoint, String bearerToken, String ifModifiedSince, String ifNoneMatch, String noneMatch) {
         try {
@@ -178,6 +189,7 @@ public class APIClient {
             RequestSpecification request = buildRequest(token, "application/json");
             request.body(body);
             Response response = request.put(endpoint);
+            LoggerUtil.logRequest(request, endpoint, body);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -190,7 +202,9 @@ public class APIClient {
     public Response deleteRequest(String endpoint, String params, String token) {
         try {
             RequestSpecification request = buildRequest(token, "application/json");
+            LoggerUtil.logRequest(request, endpoint, params);
             Response response = request.delete(endpoint);
+            LoggerUtil.logRequest(request, endpoint, params);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -204,6 +218,7 @@ public class APIClient {
             RequestSpecification request = buildRequest(null, "application/unsupported");
             request.body(requestBody);
             Response response = request.post(endpoint);
+            LoggerUtil.logRequest(request, endpoint, requestBody);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -239,6 +254,7 @@ public class APIClient {
 
             request.queryParam("groupId", GROUP_ID);
             Response response = request.delete(endpoint);
+            LoggerUtil.logRequest(request, endpoint);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -253,6 +269,7 @@ public class APIClient {
 
             request.queryParam("groupId", GROUP_ID);
             Response response = request.delete(endpoint);
+            LoggerUtil.logRequest(request, endpoint);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -266,6 +283,7 @@ public class APIClient {
         try {
             RequestSpecification request = buildRequest(bearerToken, "application/json");
             request.body(Map.of("userIds", new String[]{userId}));
+            LoggerUtil.logRequest(request, endpoint);
             Response response = request.post(endpoint);
             LoggerUtil.logResponse(response);
             return response;
@@ -280,6 +298,7 @@ public class APIClient {
                 try {
             RequestSpecification request = buildRequest(bearerToken, "application/json");
             Response response = request.delete(endpoint);
+                    LoggerUtil.logRequest(request, endpoint);
                     LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -293,6 +312,7 @@ public class APIClient {
         try {
             RequestSpecification request = buildRequest(bearerToken, "application/json");
             Response response = request.get(endpoint);
+            LoggerUtil.logRequest(request, endpoint);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
@@ -306,6 +326,7 @@ public class APIClient {
         try {
             RequestSpecification request = buildRequest(bearerToken, "application/json");
             Response response = request.get(endpoint);
+            LoggerUtil.logRequest(request, endpoint);
             LoggerUtil.logResponse(response);
             return response;
         } catch (Exception e) {
