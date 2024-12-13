@@ -27,19 +27,16 @@ public class LoggerUtil {
     public static void logRequest(RequestSpecification request, String endpoint, String body) {
         LoggerUtil.request = request;
         log("Request URL: " + endpoint);
-        // Log body manually (if available)
         if (body != null && !body.isEmpty()) {
             log("Request Body: " + body);
         }
-        log("===========================================NEXT RESPONSE LOG=====================================================");
+        log("=====NEXT RESPONSE LOG====");
     }
-
 
     public static void logResponse(Response response) {
         log("Status Code: " + response.getStatusCode());
         log("Response Body: " + response.getBody().asString());
-       // log("Response Headers: " + response.getHeaders().toString());
-        log("===========================================NEXT REQUEST LOG=====================================================");
+        log("=====NEXT REQUEST LOG====");
     }
 
     public static void clearLogFile() {
@@ -49,13 +46,6 @@ public class LoggerUtil {
             e.printStackTrace();
         }
     }
-
-
-    public static void logRequest(RequestSpecification request) {
-        LoggerUtil.request = request;
-    }
-
-    public static void logRequest(RequestSpecification request, String endpoint) {
-        LoggerUtil.request = request;
-    }
 }
+
+

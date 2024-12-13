@@ -26,10 +26,10 @@ Feature: PUT Requests
     Then I should receive a response with status code 400
     And The response should contain error messages "Invalid JSON format"
 
-#  Scenario: PUT Request to update group with unauthorized user
-#    When I send a PUT request to update group with name "UpdatedGroup", description "Updated", isPublic "true", profilePicture "" without bearer token
-#    Then I should receive a response with status code 401
-#    And The response should contain error message "Unauthorized"
+  Scenario: PUT Request to update group with unauthorized user
+    When I send a PUT request to update group with name "UpdatedGroup", description "Updated", isPublic "true", profilePicture "" without bearer token
+    Then I should receive a response with status code 401
+    And The response should contain error message "Unauthorized"
 
   Scenario: PUT Request to update group with missing required fields
     When I send a PUT request to update group with missing required fields

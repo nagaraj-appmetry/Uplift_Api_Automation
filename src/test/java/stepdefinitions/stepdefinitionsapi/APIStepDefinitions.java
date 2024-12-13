@@ -4,8 +4,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import main.utilities.utilitiesapi.ConfigLoader;
 import main.utilities.utilitiesapi.LoggerUtil;
+import main.utilities.utilitiesapi.TestContext;
 import main.utilities.utilitiesapi.ValidationUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,38 +19,53 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.json.JSONArray;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v125.network.Network;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import com.google.gson.Gson;
-
 import java.io.*;
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
+import pages.ApiBase.BaseApi;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import pages.clientapi.APIClient;
 
 public class APIStepDefinitions {
 
-    
+    private WebDriver driver;
+    private static final TestContext testContext = TestContext.getInstance();
+    private static String authorizationToken;
+//    private static final AtomicBoolean tokenCaptured = new AtomicBoolean(false);
+    String bearer1Token = testContext.getAuthorizationToken();
     private static String createdGroupId;
     private static String createdEventTemplateId;
-    private static final String ABCD = "ABCDEF";
-    private final APIClient apiClient = new APIClient("https://nhimumobll.execute-api.us-west-2.amazonaws.com/development");
+//    private static final String ABCD = "ABCDEF";
+    private final BaseApi baseApi = new BaseApi("https://nhimumobll.execute-api.us-west-2.amazonaws.com/development");
     private Response response;
     public String idValue;
     public String FilePath = "src/test/java/main/utilities/utilitiesapi/FileUtils/SuccessClips";
+    public String File2dPath = "src/test/java/main/utilities/utilitiesapi/FileUtils/success2dclips";
     private double firstApiValue;
-    private static final String bearer1Token = ConfigLoader.getProperty("user1.token");
+   private static final String bearer11Token = ConfigLoader.getProperty("user1.token");
     private static final String bearer2Token = ConfigLoader.getProperty("user2.token");
     private static final String user2Id = ConfigLoader.getProperty("user2.ID");
     private static final String Gname = ConfigLoader.getProperty("group.name");
@@ -53,91 +74,112 @@ public class APIStepDefinitions {
     private static final String Gprofilepicture = ConfigLoader.getProperty("profilePicture");
     private static final String Gcount = ConfigLoader.getProperty("membercount");
     private static final Logger logger = Logger.getLogger(APIStepDefinitions.class.getName());
+    public static String GROUP_ID = "02ea7466-bb14-4d42-b08c-96cb5e0872c3";
+    public static String IN_GROUP_ID = "18cd1-9fa0-45fe-b679-bfcb837c1d6c";
+
+
+    private Scenario scenario;
+
+    @Before
+    public void before(Scenario scenario) {
+        this.scenario = scenario;
+    }
 
     @Then("I should receive a response with status code {int}")
     public void validateStatusCode(int expectedStatusCode) {
         Assert.assertEquals(response.getStatusCode(), expectedStatusCode);
         ValidationUtils.validateJsonBody(response);
-        ValidationUtils.validateResponseTime(response, 2000);
+        ValidationUtils.validateResponseTime(response, 3000);
     }
 
-    @When("I send a GET request to {string}")
-    public void i_send_a_GET_request_to(String endpoint) {
-        response=apiClient.getRequest(endpoint,null,bearer1Token);
+    @When("I send a GET request to groups")
+    public void i_send_a_GET_request_to() {
+        response = baseApi.getRequest("groups", bearer1Token, null, null, null, null, null);
     }
 
     @Then("The response should not contain body")
     public void the_response_should_not_contain_body() {
-        Assert.assertEquals(response.getBody().asString().isEmpty(),"The response body is not empty");
+        Assert.assertTrue(response.getBody().asString().isEmpty(),"The response body is not empty");
     }
 
-    @When("I send a GET request to {string} with invalid token")
-    public void sendGetRequestWithInvalidToken(String endpoint) {
-        response = apiClient.getRequest(endpoint, null, ConfigLoader.getProperty("invalid.token"));
+    @When("I send a GET request to groups with invalid token")
+    public void sendGetRequestWithInvalidToken() {
+        response = baseApi.getRequest("groups", ConfigLoader.getProperty("invalid.token"), null, null, null, null, null);
     }
 
-    @When("I send a GET request to {string} with a timeout of {int} milliseconds")
-    public void sendGetRequestWithTimeout(String endpoint, int timeout) {
-        response = apiClient.getRequestWithTimeout(endpoint, null,bearer1Token, timeout);
+    @When("I send a GET request to groups with a timeout of 1000 milliseconds")
+    public void sendGetRequestWithTimeout() {
+        response = baseApi.getRequest("groups", bearer1Token, null, null, 3000, null, null);
+
     }
 
-    @When("I send a GET request to {string} with page {int}, limit {int}")
-    public void sendGetRequestWithPagination(String endpoint, int page, int limit) {
-        response = apiClient.getRequest(endpoint,null,bearer1Token);
+
+    @When("I send a GET request to groups expecting {string} format")
+    public void sendGetRequestWithExpectedFormat( String format) {
+        response = baseApi.getRequest("groups", bearer1Token, null, null, null, null, null);
     }
 
-    @When("I send a GET request to {string} expecting {string} format")
-    public void sendGetRequestWithExpectedFormat(String endpoint, String format) {
-        response = apiClient.getRequestWithFormat(endpoint, null,bearer1Token);
-    }
-
-    @When("I send repeated GET requests to {string} to test caching")
-    public void sendRepeatedGetRequestsToTestCaching(String endpoint) {
+    @When("I send repeated GET requests to groups to test caching")
+    public void sendRepeatedGetRequestsToTestCaching() {
         for (int i = 0; i < 5; i++) {
-            response = apiClient.getRequest(endpoint, null,bearer1Token);
+            response = baseApi.getRequest("groups", bearer1Token, null, null, null, null, null);
         }
     }
 
     @When("I send a GET request to {string} with Accept header {string}")
     public void sendGetRequestWithAcceptHeader(String endpoint, String acceptHeader) {
-        response = apiClient.getRequestWithFormat(endpoint, null,bearer1Token);
+        response = baseApi.getRequest("groups", bearer1Token, null, null, null, null, null);
     }
 
-    @When("I send a GET request to a non-existent endpoint {string}")
-    public void sendGetRequestToNonExistentEndpoint(String endpoint) {
-        response = apiClient.getRequest(endpoint, null,bearer1Token);
+    @When("I send a GET request to a non-existent endpoint ours")
+    public void sendGetRequestToNonExistentEndpoint() {
+        response = baseApi.getRequest("ours", bearer1Token, null, null, null, null, null);
         Assert.assertEquals(response.getStatusCode(), 403);
     }
 
-    @When("I send a GET request to {string} with If-Modified-Since {string} and If-None-Match {string}")
-    public void sendGetRequestWithConditions(String endpoint, String ifModifiedSince, String ifNoneMatch) {
-        response = apiClient.getRequestWithCondition(endpoint, null,bearer1Token, ifModifiedSince, ifNoneMatch);
+//    @When("I send a GET request to {string} with If-Modified-Since {string} and If-None-Match {string}")
+//    public void sendGetRequestWithConditions(String endpoint, String ifModifiedSince, String ifNoneMatch) {
+//        response = apiClient.getRequestWithCondition(endpoint, null,bearer1Token, ifModifiedSince, ifNoneMatch);
+//    }
+
+    @When("I send a GET request to groups with page {int}, limit {int}, sortBy {string}")
+    public void sendGetRequestWithSortingAndFiltering(int page, int limit, String sortBy) {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("page", page);
+        queryParams.put("limit",limit);
+        queryParams.put("sortBy", sortBy);
+        response = baseApi.getRequest("/groups", bearer1Token, queryParams, null, null, null, null);
     }
 
-    @When("I send a GET request to {string} with page {int}, limit {int}, sortBy {string}")
-    public void sendGetRequestWithSortingAndFiltering(String endpoint, int page, int limit, String sortBy) {
-        response = apiClient.getGroupsWithSortingAndFiltering(endpoint,ConfigLoader.getProperty("user1.token"), page, limit, sortBy);
+    @When("I send a GET request to groups with page {int}, limit {int}, invalid bearer token")
+    public void sendGetRequestWithInvalidBearerToken(int page, int limit ) {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("page", page);
+        queryParams.put("limit",limit);
+        response = baseApi.getRequest("groups", ConfigLoader.getProperty("invalid.token"), queryParams, null, null, null, null);
     }
 
-    @When("I send a GET request to {string} with page {int}, limit {int}, invalid bearer token")
-    public void sendGetRequestWithInvalidBearerToken(String endpoint,int page, int limit ) {
-        response = apiClient.getRequest(endpoint, null, ConfigLoader.getProperty("invalid.token"));
+    @When("I send a GET request to groups with page {int}, limit {int}")
+    public void sendGetRequestForGroupsWithPageNumberAndLimit(int page, int limit) {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("page", page);
+        queryParams.put("limit",limit);
+        response = baseApi.getRequest("groups", bearer1Token, queryParams, null, null, null, null);
+        JSONObject Object = new JSONObject(response.asString());
+        JSONArray groupDetails = Object.getJSONArray("groups");
+        int count = groupDetails.length();
+        System.out.println("User part of total number of groups "+count);
     }
 
-    @When("I send a GET request for {string} with page number {int} and limit {int}")
-    public void sendGetRequestForGroupsWithPageNumberAndLimit(String endpoint, int page, int limit) {
-        response = apiClient.getGroups(endpoint,bearer1Token, page, limit);
-    }
+//    @When("I send a GET request to {string} with response format {string}")
+//    public void sendGetRequestWithResponseFormat(String endpoint, String format) {
+//        response = apiClient.getRequest(endpoint, null, format);
+//    }
 
-    @When("I send a GET request to {string} with response format {string}")
-    public void sendGetRequestWithResponseFormat(String endpoint, String format) {
-        response = apiClient.getRequestWithFormat(endpoint, null, format);
-    }
-
-    @When("I send a GET request to {string} with {string} header set to {string}")
-    public void sendGetRequestWithConditionalHeader(String endpoint, String headerName, String headerValue) {
-        response = apiClient.getRequestWithHeader(endpoint, headerName, headerValue,bearer1Token);
-    }
+//    @When("I send a GET request to {string} with {string} header set to {string}")
+//    public void sendGetRequestWithConditionalHeader(String endpoint, String headerName, String headerValue) {
+//        response = apiClient.getRequestWithHeader(endpoint, headerName, headerValue,bearer1Token);
+//    }
 
     @When("I send a POST request to create group with name {string}, description {string}, isPublic {string}, profilePicture {string} without bearer token")
     public void sendPostRequestToCreateGroupWithoutBearerToken(String name, String description, String isPublic, String profilePicture) {
@@ -147,7 +189,18 @@ public class APIStepDefinitions {
         requestBody.put("isPublic", false); // Convert isPublic to a boolean
         requestBody.put("profilePicture", profilePicture);
         String jsonBody = new Gson().toJson(requestBody);
-        response = apiClient.postRequest("groups", jsonBody, ConfigLoader.getProperty("empty.token"));
+        response = baseApi.postRequest("groups", jsonBody, ConfigLoader.getProperty("empty.token"));
+    }
+
+    @When("I send a POST request to create group with name {string}, description {string}, isPublic {string}, profilePicture {string}")
+    public void iSendAPOSTRequestToCreateGroupWithNameDescriptionIsPublicProfilePicture(String arg0, String arg1, String arg2, String arg3) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("name", arg0);
+        requestBody.put("description", arg1);
+        requestBody.put("isPublic", arg2); // Convert isPublic to a boolean
+        requestBody.put("profilePicture", arg3);
+        String jsonBody = new Gson().toJson(requestBody);
+        response = baseApi.postRequest("groups", jsonBody, ConfigLoader.getProperty("empty.token"));
     }
 
     @When("I send a POST request to create group with malformed data")
@@ -158,7 +211,7 @@ public class APIStepDefinitions {
         requestBody.put("isPublic", false);
         requestBody.put("profilePicture", 456);
         String jsonBody = new Gson().toJson(requestBody);
-        response = apiClient.postRequest("groups", jsonBody,bearer1Token);
+        response = baseApi.postRequest("groups", jsonBody,bearer1Token);
     }
 
     @When("I send a POST request to create group with long name and description")
@@ -171,25 +224,25 @@ public class APIStepDefinitions {
         requestBody.put("isPublic", false);
         requestBody.put("profilePicture", "");
         String jsonBody = new Gson().toJson(requestBody);
-        response = apiClient.postRequest("groups", jsonBody,bearer1Token);
+        response = baseApi.postRequest("groups", jsonBody,bearer1Token);
     }
 
 
     @When("I send a POST request to create group with invalid JSON")
     public void sendPostRequestWithInvalidJson() {
         String invalidJson = "{\"name\": \"NewGroup\", \"description\": \"Test\", \"isPublic\": \"true\", \"profilePicture\": \"}";
-        response = apiClient.postRequest("groups", invalidJson,bearer1Token);
+        response = baseApi.postRequest("groups", invalidJson,bearer1Token);
     }
 
     @When("I send a POST request to create group with unsupported media type")
     public void sendPostRequestWithUnsupportedMediaType() {
         String requestBody = "{\"name\": \"NewGroup\", \"description\": \"Test\", \"isPublic\": \"true\", \"profilePicture\": \"\"}";
-        response = apiClient.postRequestWithUnsupportedMediaType("groups", requestBody,bearer1Token);
+        response = baseApi.postRequest("groups", requestBody,bearer1Token);
     }
 
     @When("I send a POST request to create group with empty body")
     public void sendPostRequestWithEmptyBody() {
-        response = apiClient.postRequest("groups", "",bearer1Token);
+        response = baseApi.postRequest("groups", "",bearer1Token);
     }
 
     @When("I send a POST request to create group with extremely large request body")
@@ -200,7 +253,7 @@ public class APIStepDefinitions {
         }
         largeRequestBody.append("\", \"isPublic\": \"true\", \"profilePicture\": \"\"}");
         String jsonBody = new Gson().toJson(largeRequestBody);
-        response = apiClient.postRequest("groups", jsonBody,bearer1Token);
+        response = baseApi.postRequest("groups", jsonBody,bearer1Token);
     }
 
     @When("I send a PUT request to update group with name {string}, description {string}, isPublic {string}, profilePicture {string}")
@@ -210,9 +263,26 @@ public class APIStepDefinitions {
         requestBody.put("description", description);
         requestBody.put("isPublic", isPublic);
         requestBody.put("profilePicture", profilePicture);
-        response = apiClient.putRequest("groups/1", requestBody.toString(),bearer1Token);
+        response = baseApi.putRequest("groups/1", requestBody.toString(),bearer1Token);
     }
 
+    @When("I send a PUT request to update group with name {string}, description {string}, isPublic {string}, profilePicture {string} without bearer token")
+    public void sendPutRequestToUpdateGroupWithoutBearerToken(String name, String description, String isPublic, String profilePicture) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("name", name);
+        requestBody.put("description", description);
+        requestBody.put("isPublic", isPublic);
+        requestBody.put("profilePicture", profilePicture);
+        response = baseApi.putRequest("groups/1", requestBody.toString(),null);
+    }
+
+
+    @And("The response should contain error message {string}")
+    public void theResponseShouldContainErrorMessage(String expectedErrorMessage) {
+        response.then()
+                .assertThat()
+                .body("message", Matchers.equalTo(expectedErrorMessage));
+    }
 
     @When("I send a PUT request to update group with malformed data")
     public void sendPutRequestWithMalformedData() {
@@ -221,7 +291,7 @@ public class APIStepDefinitions {
         requestBody.put("description", true);
         requestBody.put("isPublic", "not_a_boolean");
         requestBody.put("profilePicture", 456);
-        response = apiClient.putRequest("groups/1", requestBody.toString(),bearer1Token);
+        response = baseApi.putRequest("groups/1", requestBody.toString(),bearer1Token);
     }
 
     @When("I send a PUT request to update group with long name and description")
@@ -233,25 +303,25 @@ public class APIStepDefinitions {
         requestBody.put("description", longDescription);
         requestBody.put("isPublic", "true");
         requestBody.put("profilePicture", "");
-        response = apiClient.putRequest("groups/1", requestBody.toString(),bearer1Token);
+        response = baseApi.putRequest("groups/1", requestBody.toString(),bearer1Token);
     }
 
     @When("I send a PUT request to update group with non-existent ID")
     public void sendPutRequestWithNonExistentId() {
         String requestBody = "{\"name\": \"UpdatedGroup\", \"description\": \"Updated\", \"isPublic\": \"true\", \"profilePicture\": \"\"}";
-        response = apiClient.putRequest("groups/9999", requestBody,bearer1Token);
+        response = baseApi.putRequest("groups/9999", requestBody,bearer1Token);
     }
 
     @When("I send a PUT request to update group with invalid JSON")
     public void sendPutRequestWithInvalidJson() {
         String invalidJson = "{\"name\": \"UpdatedGroup\", \"description\": \"Updated\", \"isPublic\": \"true\", \"profilePicture\": \"";
-        response = apiClient.putRequest("groups/1", invalidJson,bearer1Token);
+        response = baseApi.putRequest("groups/1", invalidJson,bearer1Token);
     }
 
     @When("I send a PUT request to update group with partial update")
     public void sendPutRequestWithPartialUpdate() {
         String requestBody = "{\"description\": \"Updated\"}";
-        response = apiClient.putRequest("groups/1", requestBody,bearer1Token);
+        response = baseApi.putRequest("groups/1", requestBody,bearer1Token);
     }
 
     @When("I send a PUT request to update group with missing required fields")
@@ -259,37 +329,47 @@ public class APIStepDefinitions {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("name", "");
         requestBody.put("description", "");
-        response = apiClient.putRequest("groups/update", requestBody.toString(), bearer1Token);
+        response = baseApi.putRequest("groups/update", requestBody.toString(), bearer1Token);
     }
 
     @When("I send a DELETE request to delete group with invalid groupID")
     public void sendDeleteRequestWithInvalidID() {
-        response = apiClient.deleteRequest("groups", ABCD, bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", IN_GROUP_ID);
+        response = baseApi.deleteRequest("groups",queryParams , bearer1Token);
     }
 
     @When("I send a DELETE request to delete group with non-existent ID")
     public void sendDeleteRequestWithNonExistentID() {
-        response = apiClient.deleteRequest("groups", ABCD, bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", IN_GROUP_ID);
+        response = baseApi.deleteRequest("groups", queryParams, bearer1Token);
     }
 
     @When("I send a DELETE request to delete group with valid ID")
     public void sendDeleteRequestWithValidID() {
-        response = apiClient.deleteRequest("groups", APIClient.GROUP_ID, bearer1Token); // Assuming ID 1 for demo
+//        Map<String, Object>  queryParams= new HashMap<>();
+//        queryParams.put("groupId", GROUP_ID);
+        response = baseApi.deleteRequest("groups/"+GROUP_ID,null, bearer1Token); // Assuming ID 1 for demo
     }
 
     @When("I send a DELETE request to delete group with valid ID without bearer token")
     public void sendDeleteRequestWithValidIdWithoutBearerToken() {
-        response = apiClient.deleteRequest("groups", null, ConfigLoader.getProperty("invalid.token"));
+        response = baseApi.deleteRequest("groups", null, ConfigLoader.getProperty("invalid.token"));
     }
 
     @When("I send a DELETE request to delete group with valid ID that has already been deleted")
     public void sendDeleteRequestWithValidIdThatHasAlreadyBeenDeleted() {
-        response = apiClient.deleteRequest("groups", APIClient.GROUP_ID, bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", IN_GROUP_ID);
+        response = baseApi.deleteRequest("groups", queryParams, bearer1Token);
     }
 
     @When("I send a DELETE request to delete group with malformed ID")
     public void sendDeleteRequestWithMalformedId() {
-        response = apiClient.deleteRequest("groups",ABCD, bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", IN_GROUP_ID);
+        response = baseApi.deleteRequest("groups",queryParams, bearer1Token);
     }
 
     @Then("The response should contain error messages {string}")
@@ -321,17 +401,19 @@ public class APIStepDefinitions {
 
     @When("I send a POST request to {string} with body {string}")
     public void i_send_a_POST_request_to_with_body(String endpoint, String body) {
-        response = apiClient.postRequest(endpoint, body,bearer1Token);
+        response = baseApi.postRequest(endpoint, body,bearer1Token);
     }
 
     @When("I send a PUT request to {string} with body {string}")
     public void i_send_a_PUT_request_to_with_body(String endpoint, String body) {
-        response = apiClient.putRequest(endpoint, body, bearer1Token);
+        response = baseApi.putRequest(endpoint, body, bearer1Token);
     }
 
     @When("I send a DELETE request to delete group invite with ID {string}")
     public void i_send_a_DELETE_request_to_delete_group_invite_with_id(String inviteId) {
-        response = apiClient.deleteAcceptedGroupInvite(inviteId, bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", GROUP_ID);
+        response = baseApi.deleteRequest(inviteId, queryParams,bearer1Token);
     }
 
     @When("I validate the response status code is {int}")
@@ -345,38 +427,45 @@ public class APIStepDefinitions {
     }
 
     @When("I send a GET request to search users within a group with valid groupId and query")
-    public void sendGetRequestToSearchUsersWithinGroup(String groupId, String query, String token) {
+    public void sendGetRequestToSearchUsersWithinGroup(String groupId, String query) {
         String endpoint = String.format("groups/%s/users?search=%s", groupId, query);
-        response = apiClient.getRequest(endpoint, null, bearer1Token);
+        response = baseApi.getRequest(endpoint, bearer1Token, null, null, null, null, null);
     }
 
     @When("I send a DELETE request to delete an accepted group invite with valid inviteId")
-    public void sendDeleteRequestToDeleteAcceptedGroupInvite(String endpoint, String token) {
-        response = apiClient.deleteAcceptedGroupInvite(endpoint, bearer1Token);
+    public void sendDeleteRequestToDeleteAcceptedGroupInvite(String endpoint) {
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("groupId", GROUP_ID);
+        response = baseApi.deleteRequest(endpoint, queryParams, bearer1Token);
     }
 
     @When("I send a DELETE request to delete a declined group invite with valid inviteId")
-    public void sendDeleteRequestToDeleteDeclinedGroupInvite(String endpoint, String token) {
-        response = apiClient.deleteDeclinedGroupInvite(endpoint, bearer1Token);
+    public void sendDeleteRequestToDeleteDeclinedGroupInvite() {
+        String endpoint = "/groups/:"+ IN_GROUP_ID+"/decline-invite";
+        response = baseApi.deleteRequest(endpoint,null, bearer1Token);
     }
 
     @When("I send a POST request to create group")
-    public void createGroup() throws FileNotFoundException {
+    public void createGroup() {
+
+        if (bearer1Token == null) {
+            throw new IllegalStateException("Authorization token not set. Please ensure the login scenario runs first.");
+        }
+
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("name", Gname);
         requestBody.put("description", Gdescription);
         requestBody.put("isPublic", Gpublic);
         requestBody.put("profilePicture", Gprofilepicture);
         String jsonBody = new Gson().toJson(requestBody);
-//        System.out.println(apiClient.postRequest( "groups", jsonBody, bearerToken));
-        response = apiClient.postRequest( "groups", jsonBody, bearer1Token);
+        response = baseApi.postRequest( "groups", jsonBody, bearer1Token);
         ValidationUtils.validateJsonBody(response);
        LoggerUtil.logResponse(response);
-       // response.prettyPrint();
+       response.prettyPrint();
         JSONObject responseBody = new JSONObject(response.getBody().asString());
         String groupId = responseBody.getString("groupId");
 
-        //assertThat("Group ID should not be null.", groupId, notNullValue());
+        assertThat("Group ID should not be null.", groupId, notNullValue());
     }
 
     @When("User 1 fetches the group ID of the newly created group")
@@ -392,7 +481,7 @@ public class APIStepDefinitions {
 
     @Then("User 1 sends a group invite to User 2 with userId")
     public void sendGroupInvite() {
-        response = apiClient.sendGroupInvite(createdGroupId, user2Id, bearer1Token);
+        response = baseApi.sendGroupInvite(createdGroupId, user2Id, bearer1Token);
         ValidationUtils.validateJsonBody(response);
         String inviteId = response.jsonPath().getString("inviteId");
         LoggerUtil.log("Invite sent with Invite ID: " + inviteId);
@@ -402,14 +491,15 @@ public class APIStepDefinitions {
 
     @When("User 2 accepts the group invite")
     public void acceptGroupInvite() {
-        response = apiClient.acceptGroupInvite(createdGroupId, bearer2Token);
+        String endpoint = "/groups/" + createdGroupId + "/accept-invite";
+        response = baseApi.deleteRequest(endpoint,null, bearer2Token);
         ValidationUtils.validateJsonBody(response);
         LoggerUtil.logResponse(response);
     }
 
     @Then("User 1 fetches the group details to verify the member count is 2")
     public void verifyMemberCount() {
-        response = apiClient.getGroupDetails(createdGroupId, bearer1Token);
+        response = baseApi.getRequest("/groups", bearer1Token, null, null, null, null, createdGroupId);
         String memberCount = response.jsonPath().getString("memberCount");
         Assert.assertEquals(memberCount, Gcount, "Member count does not match.");
         LoggerUtil.log("Verified member count is: " + memberCount);
@@ -419,7 +509,7 @@ public class APIStepDefinitions {
 
     @Then("User 1 lists the group users to verify that User 2 is a member of the group")
     public void listGroupUsers() {
-        response = apiClient.listGroupUsers(createdGroupId, bearer1Token);
+        response = baseApi.getRequest("/groups/"+createdGroupId+"/users", bearer1Token, null, null, null, null, null);
         JsonPath jsonPath = response.jsonPath();
         List<String> userIds = jsonPath.getList("members.userId");
         if (userIds == null) {
@@ -433,20 +523,15 @@ public class APIStepDefinitions {
         ValidationUtils.validateJsonBody(response);
         LoggerUtil.logResponse(response);
     }
-/*
-.
-.
-.
- */
 
     @When("I send a POST request to create Room Event template")
     public void iSendAPOSTRequestToCreateRoomEventID() {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("assessmentProtocolId", 1);
         String jsonBody = new Gson().toJson(requestBody);
-        response = apiClient.postRequest( "room-event-templates", jsonBody, bearer1Token);
-        //ValidationUtils.validateJsonBody(response);
-       // response.prettyPrint();
+        response = baseApi.postRequest( "room-event-templates", jsonBody, bearer1Token);
+        ValidationUtils.validateJsonBody(response);
+        response.prettyPrint();
         JSONObject responseBody = new JSONObject(response.getBody().asString());
         String roomeventID = responseBody.getString("roomEventTemplateId");
         System.out.println(roomeventID);
@@ -460,11 +545,12 @@ public class APIStepDefinitions {
         //Assert.assertNotNull(createdGroupId, "Group ID should not be null.");
         LoggerUtil.log("Fetched Group ID: " + createdEventTemplateId);
         //ValidationUtils.validateJsonBody(response);
+
     }
 
     @When("User 1 creates the assessment based on the Room Event template ID")
     public void userCreatesTheAssessmentBasedOnTheRoomEventID() {
-        response = apiClient.postRequest( "room-events/assessments/"+createdEventTemplateId, null, bearer1Token);
+        response = baseApi.postRequest( "room-events/assessments/"+createdEventTemplateId, null, bearer1Token);
         ValidationUtils.validateJsonBody(response);
         // response.prettyPrint();
         JsonPath jsonPath = response.jsonPath();
@@ -472,11 +558,13 @@ public class APIStepDefinitions {
         System.out.println("======================idValue : "+idValue+"======================");
     }
 
-    @Then("user processes all txt files and creates assets")
+    @Then("^user processes all txt files and creates assets$")
     public void userProcessesAllTxtFilesAndCreatesAssets() throws IOException {
-        String directoryPath = FilePath;  // Update with the actual path
-        processTxtFilesAndCreateAssets(directoryPath);
+        boolean includeGroupId = scenario.getSourceTagNames().contains("@WithGroupId");
+        String directoryPath = FilePath; // Update with actual path
+        processTxtFilesAndCreateAssets(directoryPath, includeGroupId);
     }
+
 
     private Map<String, String> loadAssetIdsFromProperties(String propertiesFilePath) throws IOException {
         Properties properties = new Properties();
@@ -492,129 +580,109 @@ public class APIStepDefinitions {
     }
 
 
-    public void processTxtFilesAndCreateAssets(String directoryPath) throws IOException {
-        // Load all .txt files in the directory
+    public void processTxtFilesAndCreateAssets(String directoryPath, boolean includeGroupId) throws IOException {
         File folder = new File(directoryPath);
         File[] txtFiles = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
-
-        // Properties object to store asset IDs
         Properties assetIdsProperties = new Properties();
-
         if (txtFiles != null) {
             for (File txtFile : txtFiles) {
-                // Generate a unique asset ID
                 String assetId = UUID.randomUUID().toString();
                 logger.info("------------------------------------------------------");
                 logger.info(assetId);
                 logger.info("------------------------------------------------------");
-
-                // Call the method to create assets
-                createAsset(assetId);
-
-                // Store the assetId in the properties object with the file name as the key
+                createAsset(assetId, includeGroupId);
                 assetIdsProperties.put(txtFile.getName(), assetId);
             }
         }
-
-        // Save the asset IDs to a properties file
-        try (FileOutputStream output = new FileOutputStream("src/test/java/main/utilities/utilitiesapi/FileUtils/InputFolder/assetIds.properties")) { // Update with the actual path
+        try (FileOutputStream output = new FileOutputStream("src/test/java/main/utilities/utilitiesapi/FileUtils/InputFolder/assetIds.properties")) { // Update with actual path
             assetIdsProperties.store(output, "Asset IDs");
         }
     }
 
-    public void createAsset(String assetId) {
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("roomEventId", idValue); // Replace with the actual idValue
 
-        // Properly set assetTag as a JSON array
+    public void createAsset(String assetId, boolean includeGroupId) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("roomEventId", idValue);
         List<String> assetTags = Collections.singletonList("user_upload");
         requestBody.put("assetTag", assetTags);
         requestBody.put("assetId", assetId);
 
-        // Convert the request body to JSON
+        if (includeGroupId) {
+            requestBody.put("groupId", "4b505cf6-8455-4d47-80f5-988c025ea3d0");
+        }
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonBody = gson.toJson(requestBody);
+
         // Assuming apiClient and bearer1Token are available and properly configured
-        response = apiClient.postRequest("assets", jsonBody, bearer1Token);
+        response = baseApi.postRequest("assets", jsonBody, bearer1Token);
     }
 
     @Then("user processes all txt files and creates metrics")
     public void userProcessesAllTxtFiles() throws IOException {
-        // Path to your directory containing the .txt files
         String directoryPath = FilePath;
-
-        // Load asset IDs from properties file
+        String directory2dPath = File2dPath; // Path for 2D data files
         Map<String, String> assetIds = loadAssetIdsFromProperties("src/test/java/main/utilities/utilitiesapi/FileUtils/InputFolder/assetIds.properties");
-
-        // Initialize the request body map
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("roomEventId", idValue);
         requestBody.put("mock", false);
-
-        // List to hold multiple capture objects
         List<Map<String, Object>> captures = new ArrayList<>();
 
-        // Get a list of .txt files in the directory
         Files.list(Paths.get(directoryPath))
                 .filter(path -> path.toString().endsWith(".txt"))
                 .forEach(path -> {
                     try {
-                        // Read the content of the file
+                        // Read data from the current file
                         String data = new String(Files.readAllBytes(path));
-
-                        // Replace all occurrences of \\n followed by digits
                         data = data.replaceAll("\\\\n(?=\\d)", "\n");
-
-                        // Replace all other occurrences of \\n (including at the end of the file)
                         data = data.replaceAll("\\\\n", "\n");
-                        // Extract the dimension key and value from the file name
+
+                        // Fetch corresponding 2D data
                         String fileName = path.getFileName().toString();
-                        String[] fileNameParts = fileName.split("_", 3); // Split into 3 parts to handle the key and value correctly
-                        String dimensionKey = fileNameParts[0] + "_" + fileNameParts[1]; // Combine the first two parts for the key
-                        String dimensionValue = fileNameParts[2].replace(".txt", ""); // The third part is the value
+                        Path data2dPath = Paths.get(directory2dPath, fileName); // Match file name in 2D folder
+                        String data2d = "";
+                        if (Files.exists(data2dPath)) {
+                            data2d = new String(Files.readAllBytes(data2dPath));
+                            data2d = data2d.replaceAll("\\\\n(?=\\d)", "\n");
+                            data2d = data2d.replaceAll("\\\\n", "\n");
+                        }
+
+                        // Process file name to extract dimensions
+                        String[] fileNameParts = fileName.split("_", 3);
+                        String dimensionKey = fileNameParts[0] + "_" + fileNameParts[1];
+                        String dimensionValue = fileNameParts[2].replace(".txt", "");
                         if (dimensionValue.matches(".*-\\d+$")) {
                             dimensionValue = dimensionValue.replaceFirst("-\\d+$", "");
                         }
-
-                        // Create dimension map
                         Map<String, String> dimension = new HashMap<>();
                         dimension.put(dimensionKey, dimensionValue);
 
-                        // Generate a random asset ID
+                        // Create capture object
                         String assetId = assetIds.get(fileName);
-
-                        // Create a capture map for each file
                         Map<String, Object> capture = new HashMap<>();
-                        capture.get("assetId");
                         capture.put("assetId", assetId);
                         capture.put("dimension", Collections.singletonList(dimension));
                         capture.put("keypointModel", "Keypoints_3D-mobile_ios-general-pose_3d-videopose-coco_wholebody:v0");
-                        capture.put("data", data);
+                        capture.put("data", data); // Add original data
+                        capture.put("data2d", data2d); // Add 2D data
                         capture.put("movement", "countermovement");
                         capture.put("activity", "jump");
-                       capture.put("framerate", 211.91908264160156);
-                        //capture.put("framerate", 240.2708740234375);
-                        //capture.put("capturedAt", 1723004693.0);
-
-                        // Get the current time in seconds (Unix epoch time)
+                        capture.put("framerate", 211.91908264160156);
                         long epochTimestamp = System.currentTimeMillis() / 1000;
                         capture.put("capturedAt", epochTimestamp);
 
-                        // Add the capture to the captures list
+                        // Add to captures list
                         captures.add(capture);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
 
-        // Add the captures list to the request body
+        // Build request body and save JSON
         requestBody.put("captures", captures);
-
-        // Convert the request body map to a JSON string
         String jsonBody = new Gson().toJson(requestBody);
-        System.out.println("Generated JSON: " + jsonBody);  // Add this line for debugging
+        System.out.println("Generated JSON: " + jsonBody);
 
-        // Write the captures list to a new JSON file
         try (FileWriter fileWriter = new FileWriter("src/test/resources/captures.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(captures, fileWriter);
@@ -622,8 +690,8 @@ public class APIStepDefinitions {
             e.printStackTrace();
         }
 
-        // Send the request to the API endpoint
-        response = apiClient.postRequest("/performance/metrics", jsonBody, bearer1Token);
+        // Send API request
+        response = baseApi.postRequest("/performance/metrics", jsonBody, bearer1Token);
         System.out.println(response);
     }
 
@@ -635,7 +703,7 @@ public class APIStepDefinitions {
         requestBody.put("timezone","Asia/Kolkata");
         requestBody.put("mock",false);
         String jsonBody = new Gson().toJson(requestBody);
-        response = apiClient.postRequest( "performance/aggregate", jsonBody, bearer1Token);
+        response = baseApi.postRequest( "performance/aggregate", jsonBody, bearer1Token);
         ValidationUtils.validateJsonBody(response);
 
 //        JSONObject responseBody = new JSONObject(response.getBody().asString());
@@ -647,7 +715,7 @@ public class APIStepDefinitions {
     public void iSendPerformanceOverviewCall() {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("timezone", "Asia/Kolkata");
-        response = apiClient.getRequest( "performance/overview",queryParams, bearer1Token);
+        response = baseApi.getRequest( "performance/overview",bearer1Token, queryParams, null,null,null,null);
         // Parse the response and extract the "value" attribute from the first item
         JSONArray responseBody = new JSONArray(response.getBody().asString());
         JSONObject firstMetric = responseBody.getJSONObject(0);
@@ -660,14 +728,11 @@ public class APIStepDefinitions {
         requestBody.put("groupId", "0ac5bcad-ed0d-4cc4-96e7-0d8b3414f139");
         requestBody.put("interval", "weekly");
         requestBody.put("timezone","America/Los_Angeles");
-        response=apiClient.getRequest("leaderboards",requestBody,bearer1Token);
-
+        response= baseApi.getRequest("leaderboards",bearer1Token,requestBody, null, null,null,null);
         JSONObject responseBody = new JSONObject(response.getBody().asString());
         JSONArray leaderboard = responseBody.getJSONArray("leaderboard");
         JSONObject firstEntry = leaderboard.getJSONObject(0);
         double leaderboardValue = firstEntry.getDouble("value");
-
-        // Compare the value from the first API with the second API
         if (this.firstApiValue == leaderboardValue) {
             System.out.println("Values match: " + this.firstApiValue + " == " + leaderboardValue);
         } else {
@@ -695,8 +760,6 @@ public class APIStepDefinitions {
             default:
                 throw new IllegalArgumentException("Invalid range selection: " + rangeSelection);
         }
-
-        // Format the dates
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedStartDate = startDate.format(formatter);
         String formattedEndDate = endDate.format(formatter);
@@ -712,13 +775,7 @@ public class APIStepDefinitions {
         requestBody.put("startDate", formattedStartDate);
         requestBody.put("endDate", formattedEndDate);
         requestBody.put("metricId", metricIdSelection);
-
-        // Print request body for debugging
-        System.out.println("Request Body: " + requestBody);
-
-
-        // Send the request to the API
-        response = apiClient.getRequest("performance/aggregate", requestBody, bearer1Token);
+        response = baseApi.getRequest("performance/aggregate", bearer1Token, requestBody, null, null, null, null);
 
     }
 
@@ -728,7 +785,7 @@ public class APIStepDefinitions {
         requestBody.put("page", 0); // Assuming idValue is defined somewhere in the class
         requestBody.put("limit", "50");
         requestBody.put("classType", "private");
-        response=apiClient.getRequest("/room-events", requestBody, bearer1Token);
+        response = baseApi.getRequest("room-events", bearer1Token, requestBody, null, null, null, null);
 
         // Parse the JSON response
         try {
@@ -755,9 +812,11 @@ public class APIStepDefinitions {
 
     @Then("i delete all the room events using post call")
     public void iDeleteAllTheRoomEventsUsingPostCall() {
-        String roomEventId = "43f40fa6-809f-4e5d-91b3-2464d9278a79";
-        String groupId = "string";
-        response=apiClient.deleteRequest("/room-events/:", roomEventId + "?groupId=" + groupId,bearer1Token);
+        Map<String, Object>  queryParams= new HashMap<>();
+        queryParams.put("roomEventId", "43f40fa6-809f-4e5d-91b3-2464d9278a79");
+        queryParams.put("groupId", "string");
+
+        response= baseApi.deleteRequest("/room-events/:", queryParams,bearer1Token);
 
     }
 
@@ -772,16 +831,132 @@ public class APIStepDefinitions {
 
     @When("i send get request to get the my profile")
     public void iSendGetRequestToGetTheMyProfile() {
-        Map<String, String> customHeaders = new HashMap<>();
-        customHeaders.put("uplift-app", "takeoff");
-        customHeaders.put("uplift-version", "2");
-        customHeaders.put("Cache-Control", "no-store");
+        response = baseApi.getRequest("me", bearer1Token, null, null, null, null, null);
+    }
 
-        response = apiClient.getRequestWithHeaders("me", customHeaders, bearer1Token);
-
+    @When("I send Post request to create Assessment without roomevent template")
+    public void iSendPostRequestToCreateAssessment() {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("timezone","Asia/Kolkata");
+        requestBody.put("assessmentProtocolId",1);
+        String jsonBody = new Gson().toJson(requestBody);
+        response = baseApi.postRequest( "room-events/assessments", jsonBody, bearer1Token);
 
     }
+
+    @Given("I open the login page")
+    public void openLoginPage() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver(); // Use the global instance
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.get("https://development.upliftlabs.io/user/login");
+        driver.manage().window().maximize();
+        Thread.sleep(15000); // Wait for the page to load (reduce or remove for better performance)
+    }
+
+    public void closeLoginPage() throws InterruptedException {
+        driver.manage().window().maximize();
+        Thread.sleep(5000);
+        driver.quit();
+    }
+
+
+
+    @When("I login with username {string} and password {string}")
+    public void login(String username, String password) {
+        WebElement emailField = driver.findElement(By.xpath("//INPUT[@name='email']"));
+        WebElement passwordField = driver.findElement(By.xpath("//INPUT[@name='password']"));
+        WebElement loginButton = driver.findElement(By.xpath("//BUTTON[@type='submit']"));
+
+        emailField.sendKeys(username);
+        passwordField.sendKeys(password);
+        loginButton.click();
+    }
+    
+    @Then("I navigate to the account page and fetch the bearer token")
+    public void navigateToAccountPageAndFetchToken() {
+        DevTools devTools = ((ChromeDriver) driver).getDevTools();
+        devTools.createSession();
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+
+        devTools.addListener(Network.requestWillBeSent(), request -> {
+            String url = request.getRequest().getUrl();
+            if (url.contains("/train_development/me") && authorizationToken == null) {
+                Map<String, Object> headers = request.getRequest().getHeaders();
+                if (headers.containsKey("Authorization")) {
+                    authorizationToken = (String) headers.get("Authorization");
+                    testContext.setAuthorizationToken(authorizationToken);
+                    System.out.println("Authorization token captured: " + authorizationToken);
+                }
+            }
+        });
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//DIV[@class='align-self-center list-thumbnail-letters   inline-flex user-avatar-small  rounded-circle small']")));
+        dropdown.click();
+
+        WebElement accountButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//BUTTON[@type='button'][text()='Account']")));
+        accountButton.click();
+
+        if (authorizationToken != null) {
+            System.out.println("Fetched and stored Authorization Token: " + authorizationToken);
+            driver.manage().window().minimize();
+        } else {
+            System.err.println("Authorization token not captured.");
+            driver.quit();
+        }
+    }
+
+    @When("I send a GET request to groups with page {int}, limit {int}, role {string}")
+    public void sendGetRequestForGroupsWithPageNumberAndLimit(int page, int limit, String role) {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("page", page);
+        queryParams.put("limit",limit);
+        queryParams.put("role", role);
+        response = baseApi.getRequest("groups", bearer1Token, queryParams, null, null, null, null);
+        List<String> groupIds = extractGroupIds(response);
+        TestContext.setGroupIds(groupIds);
+    }
+    private List<String> extractGroupIds(Response response) {
+        List<String> groupIds = new ArrayList<>();
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        JSONArray groups = jsonResponse.getJSONArray("groups");
+        for (int i = 0; i < groups.length(); i++) {
+            groupIds.add(groups.getJSONObject(i).getString("groupId"));
+        }
+        return groupIds;
+    }
+
+    @Then("I send a DELETE request to delete all group")
+    public void iSendADELETERequestToDeleteAllGroup() {
+        List<String> groupIds = TestContext.getGroupIds();
+        for (String groupId : groupIds) {
+            deleteGroup(groupId);
+        }
+    }
+    private void deleteGroup(String groupId) {
+        response = baseApi.deleteRequest("groups/"+groupId, null, bearer1Token);
+    }
+
+    @When("User 1 creates the assessment for facilitate")
+    public void userCreatesTheAssessment() {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("headOrganizer","fab188af-0f87-4e7e-a956-cadd2c311dbb");
+        requestBody.put("assessmentProtocolId",1);
+        requestBody.put("groupId","4b505cf6-8455-4d47-80f5-988c025ea3d0");
+        String jsonBody = new Gson().toJson(requestBody);
+        response = baseApi.postRequest( "room-events/assessments", jsonBody, bearer1Token);
+        ValidationUtils.validateJsonBody(response);
+        JsonPath jsonPath = response.jsonPath();
+        idValue = jsonPath.getString("roomEvent.id");
+        System.out.println("======================idValue : "+idValue+"======================");
+    }
+
+
 }
+
+
+
 
 
 

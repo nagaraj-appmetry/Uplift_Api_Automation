@@ -1,0 +1,103 @@
+Feature: Uplift API testing
+
+  Scenario: Verify GET request to groups endpoint with valid parameters
+    When I send a GET request to groups with page 1, limit 5
+    Then I should receive a response with status code 200
+    And The response should have a valid JSON body with the correct fields
+    And The response should have header "Content-Type" with value "application/json"
+
+  Scenario: Verify POST request to create group with valid parameters
+    When I send a POST request to create group with name "Test Group", description "This is a test group", isPublic true, profilePicture "https://example.com/image.png"
+    Then I should receive a response with status code 201
+    And The response should have a valid JSON body with the correct fields
+    And The response should have header "Content-Type" with value "application/json"
+
+  Scenario: Verify GET request with invalid token
+    When I send a GET request to "groups" with invalid token
+    Then I should receive a response with status code 401
+    And The response should contain error message "Unauthorized"
+
+  Scenario: Verify GET request with missing token
+    When I send a GET request to "groups" without a token
+    Then I should receive a response with status code 401
+    And The response should contain error message "Unauthorized"
+
+  Scenario: Verify GET request to groups endpoint with invalid parameters
+    When I send a GET request to groups with page -1, limit -1
+    Then I should receive a response with status code 400
+    And The response should contain error message "Bad Request"
+
+  Scenario: Verify GET request to groups endpoint with missing parameters
+    When I send a GET request to groups with page 1, limit
+    Then I should receive a response with status code 400
+
+  Scenario: Verify GET request to groups endpoint with unsupported method
+    When I send a PUT request to groups with page 1, limit 5
+    Then I should receive a response with status code 405
+    And The response should contain error message "Method Not Allowed"
+
+  Scenario: Verify GET request to invalid endpoint
+    When I send a GET request to invalidEndpoint with page 1, limit 5
+    Then I should receive a response with status code 404
+    And The response should contain error message "Not Found"
+
+  Scenario: Verify GET request with invalid parameters
+    When I send a GET request to groups with page -1, limit 0
+    Then I should receive a response with status code 400
+    And The response should contain error message "Bad Request"
+
+  Scenario: Verify POST request with invalid parameters
+    When I send a POST request to create group with name "", description "", isPublic true, profilePicture "invalidUrl"
+    Then I should receive a response with status code 400
+    And The response should contain error message "Bad Request"
+
+  Scenario: Verify POST request to create group with missing required fields
+    When I send a POST request to create group with name "", description "", isPublic true, profilePicture ""
+    Then I should receive a response with status code 400
+    And The response should contain error message "Bad Request"
+
+  Scenario: Verify PUT request to unsupported endpoint
+    When I send a PUT request to "groups"
+    Then I should receive a response with status code 405
+    And The response should contain error message "Method Not Allowed"
+
+  Scenario: Verify DELETE request to unsupported endpoint
+    When I send a DELETE request to "groups"
+    Then I should receive a response with status code 405
+    And The response should contain error message "Method Not Allowed"
+
+  Scenario: Verify response time for GET request
+    When I send a GET request to groups with page 1, limit 5
+    Then I should receive a response with status code 200
+    And The response time should be less than 2000 ms
+
+  Scenario: Verify schema of response body
+    When I send a GET request to groups with page 1, limit 5
+    Then I should receive a response with status code 200
+    And The response body should match the expected schema
+
+  Scenario: Verify response time for GET request to groups endpoint
+    When I send a GET request to groups with page 1, limit 5
+    Then The response time should be less than 2000 ms
+
+  Scenario: Verify response time for POST request to create group
+    When I send a POST request to create group with name "Test Group", description "This is a test group", isPublic true, profilePicture "https://example.com/image.png"
+    Then The response time should be less than 2000 ms
+
+  Scenario: Verify error handling for server error
+    When I send a GET request to groups with page 9999, limit 9999
+    Then I should receive a response with status code 500
+    And The response should contain error message "Internal Server Error"
+
+  Scenario: Verify response schema matching for GET request to groups endpoint
+    When I send a GET request to groups with page 1, limit 5
+    Then The response should match the expected schema for groups
+
+  Scenario: Verify response schema matching for POST request to create group
+    When I send a POST request to create group with name "Test Group", description "This is a test group", isPublic true, profilePicture "https://example.com/image.png"
+    Then The response should match the expected schema for create group
+
+  Scenario: Verify authorization with missing token
+    When I send a GET request to groups with page 1, limit 5 without token
+    Then I should receive a response with status code 401
+    And The response should contain error message "Unauthorized"

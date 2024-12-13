@@ -10,6 +10,11 @@ public class ValidationUtils {
         LoggerUtil.log("Validated JSON body contains 'data' field.");
     }
 
+    public static void validateResponseBody(Response response) {
+        Assert.assertNotNull(response.getBody().jsonPath().get(), "Response body does not contain 'data' field!");
+        LoggerUtil.log("Validated JSON body contains 'data' field.");
+    }
+
     public static void validateResponseHeader(Response response, String headerName, String expectedValue) {
         String actualValue = response.getHeader(headerName);
         Assert.assertEquals(actualValue, expectedValue, "Header value mismatch!");
