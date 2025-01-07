@@ -9,7 +9,7 @@ import org.testng.annotations.DataProvider;
 import stepdefinitions.stepdefinitionsapi.Hooks;
 
 @CucumberOptions(
-        features = {"src/test/resources/features/featuresapi/FacilitateAssessment.feature"},
+        features = {"src/test/resources/features/featuresapi/CreateAssessmentVerifyInsights.feature"},
         glue = "stepdefinitions.stepdefinitionsapi",
         publish = true,
         plugin = { "pretty","html:target/cucumber-reports/cucumber_report.html",

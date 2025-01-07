@@ -13,7 +13,7 @@ public class Hooks {
     public void ensureLoggedIn() throws InterruptedException {
         if (!isLoggedIn) {
             apiSteps.openLoginPage();
-            apiSteps.login("nagaraj@appmetry.com", "123456789");
+            apiSteps.login("harik@appmetry.com", "12345678");
             apiSteps.navigateToAccountPageAndFetchToken();
             isLoggedIn = true;
         }

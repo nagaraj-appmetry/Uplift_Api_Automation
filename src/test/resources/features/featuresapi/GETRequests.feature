@@ -14,7 +14,7 @@ Feature: GET Requests
 #    Then I should receive a response with status code 200
 
   Scenario: Verify pagination for GET request
-    When I send a GET request to groups with page 0, limit 500, role
+    When I send a GET request to groups with page 0, limit 500
     Then I should receive a response with status code 200
 
 #  Scenario: Verify response format
