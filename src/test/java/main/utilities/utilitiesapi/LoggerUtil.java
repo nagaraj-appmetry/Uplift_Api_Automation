@@ -33,11 +33,11 @@ public class LoggerUtil {
         log("=====NEXT RESPONSE LOG====");
     }
 
-    public void logRequest(RequestSpecification spec, String arg1) {
+    public static void logRequest(RequestSpecification spec, String arg1) {
         logRequest(spec, arg1, null); // Forward to main method with default value
     }
 
-    public void logRequest(RequestSpecification spec) {
+    public static void logRequest(RequestSpecification spec) {
         logRequest(spec, null, null); // Forward to main method with default values
     }
 
